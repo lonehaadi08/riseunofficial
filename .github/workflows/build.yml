@@ -1,0 +1,45 @@
+name: Build Android APK
+
+# This allows you to manually trigger the build from GitHub with a button click
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: ☕ Setup Java (Android SDK requirement)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: 🔐 Create .env file for the APK
+        run: |
+          echo "EXPO_PUBLIC_GEMINI_API_KEY=${{ secrets.EXPO_PUBLIC_GEMINI_API_KEY }}" >> .env
+          echo "EXPO_PUBLIC_GROQ_API_KEY=${{ secrets.EXPO_PUBLIC_GROQ_API_KEY }}" >> .env
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🏗️ Unpack Expo to Native Android
+        run: npx expo prebuild --platform android --clean
+
+      - name: 🔨 Compile APK
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: 🚀 Upload APK so you can download it
+        uses: actions/upload-artifact@v3
+        with:
+          name: DigiKashmiri-APK
+          path: android/app/build/outputs/apk/release/app-release.apk

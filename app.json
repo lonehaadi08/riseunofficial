@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "rise",
+    "slug": "rise",
+    "version": "1.0.0",
+    "scheme": "rise",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
