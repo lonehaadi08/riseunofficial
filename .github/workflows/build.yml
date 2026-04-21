@@ -1,6 +1,5 @@
 name: Build Android APK
 
-# This allows you to manually trigger the build from GitHub with a button click
 on:
   workflow_dispatch:
 
@@ -29,7 +28,7 @@ jobs:
           echo "EXPO_PUBLIC_GROQ_API_KEY=${{ secrets.EXPO_PUBLIC_GROQ_API_KEY }}" >> .env
 
       - name: 📦 Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 🏗️ Unpack Expo to Native Android
         run: npx expo prebuild --platform android --clean
