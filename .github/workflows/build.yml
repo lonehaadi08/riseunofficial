@@ -15,12 +15,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm' # ⚡ MEMORY ENABLED: Skips downloading 500MB of packages next time!
 
       - name: ☕ Setup Java (Android SDK requirement)
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
+          cache: 'gradle' # ⚡ MEMORY ENABLED: Saves massive Android build tools!
 
       - name: 🔐 Create .env file for the APK
         run: |
